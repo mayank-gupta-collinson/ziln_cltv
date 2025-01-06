@@ -142,7 +142,7 @@ def fit_model(feature_map, x_train, y_train, x_test, y_test,
 
         ##Specifying the ziln loss to minimise instead of the default.
         model.compile(loss=ltv.zero_inflated_lognormal_loss, 
-        optimizer=keras.optimizers.Adam(lr=learning_rate) )
+        optimizer=keras.optimizers.Adam(learning_rate=learning_rate) )
         
         callbacks = [
             tf.keras.callbacks.EarlyStopping(monitor='val_loss', patience=callback_patience),
