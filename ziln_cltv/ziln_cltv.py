@@ -130,7 +130,7 @@ def dnn_model( feature_map, layers):
 
 
 def fit_model(feature_map, x_train, y_train, x_test, y_test,
-            layers=[64,32,3], epochs=100, learning_rate=0.0001,batch_size=1024,
+            layers, epochs, learning_rate,batch_size,
             callback_patience=20, callback_lr=1e-06,verbose=0, log_directory_name="logs"):
 
 
