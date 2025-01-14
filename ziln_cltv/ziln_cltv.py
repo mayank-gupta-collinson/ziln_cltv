@@ -161,7 +161,7 @@ def fit_model(feature_map, x_train, y_train, x_test, y_test,
         )
         return model
 
-def model_predict(model, data, feature_map, print_performance=True ):
+def model_predict(model, data, feature_map, user_column, print_performance=True ):
     """
     Function to make predictions on out of sample data. You have to encode the categorical data the same
     way as your training set. This function lets you do that along with optionally calculating
@@ -199,6 +199,8 @@ def model_predict(model, data, feature_map, print_performance=True ):
         data[cat] = data[cat].apply( lambda t: t if t in levels else 'UNDEFINED' )
         # Mappings levels to the corresponding number.
         data[cat] = data[cat].apply( lambda t: feature_map[cat][t])
+        
+    user_ids = user_column.values
     y0=data[feature_map["day1_purchaseAmt_col"]].values
 
     x_test=feature_dict(data, feature_map["numerical_features"], feature_map["categorical_features"])
@@ -210,6 +212,7 @@ def model_predict(model, data, feature_map, print_performance=True ):
     churn_predictions = K.sigmoid(logits[..., :1]).numpy().flatten()
 
     df = pd.DataFrame({
+        'userid': user_ids,
         'churn_predictions':churn_predictions,
         'ltv_prediction': ltv_pred
     })
