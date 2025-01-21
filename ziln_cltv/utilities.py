@@ -90,8 +90,8 @@ def ltv_performance(model, x_test, y_test, y0_test):
         'cumulative_customer',
         'lorenz',
         'baseline',
-        'model']].plot( x='cumulative_customer', figsize=(8, 5), legend=True)
-    ax.legend(['Groundtruth', 'Baseline', 'Model'], loc='upper left')
+        'model']].plot( x='cumulative_customer', figsize=(30, 25), legend=True)
+    ax.legend(['Groundtruth', 'Baseline', 'Model'], loc='lower right')
     ax.set_xlabel('Cumulative Fraction of Customers')
     ax.set_xticks(np.arange(0, 1.1, 0.1))
     ax.set_xlim((0, 1.))
