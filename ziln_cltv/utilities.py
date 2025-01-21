@@ -6,6 +6,7 @@ import tensorflow as tf
 from scipy import stats
 from sklearn import metrics
 from tensorflow.keras import backend as K
+import matplotlib.pyplot as plt
 
 
 def feature_dict(df, numerical_features, categorical_features):
