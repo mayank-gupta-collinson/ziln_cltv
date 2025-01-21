@@ -19,5 +19,6 @@ setup(
                         'sklearn',
                         'lifetime_value',
                         'tensorflow',
-                        'scipy']
+                        'scipy',
+                        'matplotlib']
 )
