@@ -86,30 +86,64 @@ def ltv_performance(model, x_test, y_test, y0_test):
     gain['cumulative_customer'] = (np.arange(total_customers) + 1.) / total_customers
 
     #Plotting Gain chart
-    ax = gain[[
-        'cumulative_customer',
-        'lorenz',
-        'baseline',
-        'model']].plot( x='cumulative_customer', figsize=(30, 25), legend=True)
-    ax.legend(['Groundtruth', 'Baseline', 'Model'], loc='lower right')
-    ax.set_xlabel('Cumulative Fraction of Customers')
+    # ax = gain[[
+    #     'cumulative_customer',
+    #     'lorenz',
+    #     'baseline',
+    #     'model']].plot( x='cumulative_customer', figsize=(30, 25), legend=True)
+    # ax.legend(['Groundtruth', 'Baseline', 'Model'], loc='lower right')
+    # ax.set_xlabel('Cumulative Fraction of Customers')
+    # ax.set_xticks(np.arange(0, 1.1, 0.1))
+    # ax.set_xlim((0, 1.))
+    # ax.set_ylabel('Cumulative Fraction of Total Lifetime Value')
+    # ax.set_yticks(np.arange(0, 1.1, 0.1))
+    # ax.set_ylim((0, 1.05))
+    # ax.set_title('Gain Chart')
+
+    # # Deciles for MAPE
+    # ltv_pred=np.clip(ltv_pred, y_test.min(), y_test.max())
+    # df_decile = ltv.decile_stats(y_test, ltv_pred)
+
+    # #Plotting Decile CHart
+    # ax = df_decile[['label_mean', 'pred_mean']].plot.bar(rot=0)
+    # ax.set_title('Decile Chart')
+    # ax.set_xlabel('Prediction bucket')
+    # ax.set_ylabel('Average bucket value')
+    # ax.legend(['Label', 'Prediction'], loc='upper left')
+
+    # Plotting Gain Chart
+    fig, ax = plt.subplots(figsize=(25, 20))  # Set figsize for Gain Chart
+    gain[['cumulative_customer', 'lorenz', 'baseline', 'model']].plot(
+        x='cumulative_customer', ax=ax, legend=True
+    )
+    ax.legend(
+        ['Groundtruth', 'Baseline', 'Model'], loc='lower right', fontsize=20  # Increase legend font size
+    )
+    ax.set_xlabel('Cumulative Fraction of Customers', fontsize=18)
     ax.set_xticks(np.arange(0, 1.1, 0.1))
-    ax.set_xlim((0, 1.))
-    ax.set_ylabel('Cumulative Fraction of Total Lifetime Value')
+    ax.set_xlim((0, 1.0))
+    ax.set_ylabel('Cumulative Fraction of Total Lifetime Value', fontsize=18)
     ax.set_yticks(np.arange(0, 1.1, 0.1))
     ax.set_ylim((0, 1.05))
-    ax.set_title('Gain Chart')
-
+    ax.set_title('Gain Chart', fontsize=22)
+    ax.tick_params(axis='both', which='major', labelsize=16)  # Increase tick label font size
+    
     # Deciles for MAPE
-    ltv_pred=np.clip(ltv_pred, y_test.min(), y_test.max())
+    ltv_pred = np.clip(ltv_pred, y_test.min(), y_test.max())
     df_decile = ltv.decile_stats(y_test, ltv_pred)
+    
+    # Plotting Decile Chart
+    fig, ax = plt.subplots(figsize=(25, 20))  # Set figsize for Decile Chart
+    df_decile[['label_mean', 'pred_mean']].plot.bar(ax=ax, rot=0)
+    ax.set_title('Decile Chart', fontsize=22)
+    ax.set_xlabel('Prediction bucket', fontsize=18)
+    ax.set_ylabel('Average bucket value', fontsize=18)
+    ax.legend(['Label', 'Prediction'], loc='upper left', fontsize=20)  # Increase legend font size
+    ax.tick_params(axis='both', which='major', labelsize=16)  # Increase tick label font size
+    
+    # Show the plots
+    plt.show()
 
-    #Plotting Decile CHart
-    ax = df_decile[['label_mean', 'pred_mean']].plot.bar(rot=0)
-    ax.set_title('Decile Chart')
-    ax.set_xlabel('Prediction bucket')
-    ax.set_ylabel('Average bucket value')
-    ax.legend(['Label', 'Prediction'], loc='upper left')
 
     spearman_correlation = spearmanrank(y_test, ltv_pred)
 
